@@ -50,7 +50,7 @@ themeSwitchBtn.addEventListener("click", () => {
   switchThemeHandler();
 });
 
-const api_key = "";
+const api_key = "YOUR_API_KEY_HERE";
 let city_name = "Washington DC";
 
 searchInput.addEventListener("input", (e) => {
