@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+
+    <title>Tailwind Weather App</title>
+  </head>
+  <body
+    class="grid bg-app-gradiant dark:bg-app-darkMode-gradiant h-screen dark:text-white"
+  >
+    <!-- Swittch Toggle -->
+    <div
+      class="absolute transition duration-200 ease-in w-[3rem] top-3 right-4"
+    >
+      <input
+        type="checkbox"
+        name="toggle"
+        id="toggle"
+        class="toggle-checkbox hidden"
+      />
+      <label
+        for="toggle"
+        class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"
+      >
+        <span
+          class="toggle-slider make-gray-on-active absolute left-0 bottom-0 bg-white rounded-full w-6 h-6 transition-all ease-in"
+        ></span>
+      </label>
+    </div>
+    <!-- Toggle End -->
+
+    <!-- Search Part -->
+    <div id="search-section">
+      <div
+        class="w-1/4 h-2/5 mx-auto mt-40 min-w-[300px] bg-custom-white-gradiant dark:bg-custom-dark-gradiant shadow-sm rounded-lg relative"
+      >
+        <form class="flex flex-col gap-10 items-center justify-center h-full">
+          <input
+            id="search-input"
+            type="text"
+            placeholder="Washington D.C"
+            class="bg-transparent border w-1/2 shadow-sm border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          />
+
+          <button
+            id="search-btn"
+            class="bg-transparent dark:bg-neutral-400 dark:hover:bg-transparent py-2 px-9 rounded-xl shadow-sm transition-colors hover:bg-neutral-100 font-normal tracking-widest uppercase"
+          >
+            search
+          </button>
+        </form>
+      </div>
+      <!-- End of Search -->
+      <!-- Show searched weather -->
+    </div>
+    <!-- Search End -->
+
+    <!-- Modal -->
+
+    <dialog
+      id="modal"
+      class="w-1/4 h-2/5 bg-gray-200 dark:text-white dark:bg-custom-dark-gradiant flex-col items-center justify-around rounded-md tracking-widest"
+    >
+      <p class="text-center p-3">
+        There was a error make sure you entered correct city name.
+      </p>
+      <button
+        id="modal-close-btn"
+        class="bg-transparent py-2 px-9 rounded-xl shadow-sm transition-colors bg-slate-300 hover:bg-neutral-100 hover:text-black font-normal uppercase tracking-widest"
+      >
+        Close
+      </button>
+    </dialog>
+    <!-- Modal end -->
+
+    <!-- Show Weather -->
+    <div id="show-weather" class="d-none">
+      <div
+        class="w-1/4 h-2/5 mx-auto mt-40 bg-custom-white-gradiant dark:bg-custom-dark-gradiant shadow-sm rounded-lg min-w-[300px] relative"
+      >
+        <button
+          class="cursor-pointer absolute top-3 left-3 hover:opacity-60"
+          id="return-btn"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-5 h-5 dark:text-white"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3"
+            />
+          </svg>
+        </button>
+        <p id="city-name" class="absolute top-3 right-6 tracking-widest">
+          Washington D.C
+        </p>
+        <h1
+          id="temp"
+          class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-3xl"
+        >
+          Fetching...
+        </h1>
+        <p
+          id="show-status"
+          class="absolute mt-9 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 tracking-widest lowercase"
+        >
+          status
+        </p>
+        <div class="absolute bottom-3 left-3">
+          <div class="flex flex-row-reverse items-center justify-between gap-1">
+            <p id="wind-speed" class="relative tracking-widest">50 km/h</p>
+            <svg
+              width="1rem"
+              height="1rem"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              class="dark:fill-white fill-black"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M7 5C7 2.79086 8.79086 1 11 1C13.2091 1 15 2.79086 15 5C15 7.20914 13.2091 9 11 9H3C2.44772 9 2 8.55228 2 8C2 7.44772 2.44772 7 3 7H11C12.1046 7 13 6.10457 13 5C13 3.89543 12.1046 3 11 3C9.89543 3 9 3.89543 9 5V5.1C9 5.65228 8.55228 6.1 8 6.1C7.44772 6.1 7 5.65228 7 5.1V5ZM16.9 6C16.9 5.44772 17.3477 5 17.9 5H18C20.2091 5 22 6.79086 22 9C22 11.2091 20.2091 13 18 13H5C4.44772 13 4 12.5523 4 12C4 11.4477 4.44772 11 5 11H18C19.1046 11 20 10.1046 20 9C20 7.89543 19.1046 7 18 7H17.9C17.3477 7 16.9 6.55228 16.9 6ZM0 12C0 11.4477 0.447715 11 1 11H2C2.55228 11 3 11.4477 3 12C3 12.5523 2.55228 13 2 13H1C0.447715 13 0 12.5523 0 12ZM4 16C4 15.4477 4.44772 15 5 15H6C6.55228 15 7 15.4477 7 16C7 16.5523 6.55228 17 6 17H5C4.44772 17 4 16.5523 4 16ZM8 16C8 15.4477 8.44772 15 9 15H13C15.2091 15 17 16.7909 17 19C17 21.2091 15.2091 23 13 23C10.7909 23 9 21.2091 9 19V18.9C9 18.3477 9.44771 17.9 10 17.9C10.5523 17.9 11 18.3477 11 18.9V19C11 20.1046 11.8954 21 13 21C14.1046 21 15 20.1046 15 19C15 17.8954 14.1046 17 13 17H9C8.44772 17 8 16.5523 8 16Z"
+              />
+            </svg>
+          </div>
+          <div class="flex flex-row-reverse items-center justify-between gap-1">
+            <p id="humidity" class="relative mr-auto">84 %</p>
+            <svg
+              version="1.1"
+              id="Capa_1"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              width="1rem"
+              height="1rem"
+              viewBox="0 0 371.409 371.409"
+              xml:space="preserve"
+              class="dark:fill-white"
+            >
+              <g>
+                <path
+                  d="M270.265,149.448c-36.107-47.124-70.38-78.948-73.439-141.372c0-1.836-0.612-3.06-1.836-4.284
+                  c-0.612-3.06-3.672-4.896-6.732-3.06c-3.672,0-6.731,2.448-6.731,6.732c-77.112,83.232-207.468,294.372-43.452,354.959
+                  c74.052,27.541,157.896-9.791,172.584-90.576C318.614,228.396,295.969,182.497,270.265,149.448z M138.686,323.256
+                  c-17.748-10.404-28.764-31.211-34.272-49.572c-2.448-9.18-3.672-18.359-3.06-27.539c3.672-15.912,8.568-31.213,14.076-46.512
+                  c3.06,13.463,9.18,26.928,17.748,36.719c19.584,21.422,59.364,34.273,70.38,61.201c6.732,16.523-19.584,30.6-30.6,34.271
+                  C161.33,335.496,148.477,329.377,138.686,323.256z"
+                />
+              </g>
+            </svg>
+          </div>
+        </div>
+      </div>
+      <!-- End of Search -->
+      <!-- Show searched weather -->
+    </div>
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.d-none {
+  display: none;
+}
+
+.custom-bg-white {
+  background-image: linear-gradient(135deg, #fdfcfbd5 0%, #e2d1c3b8 100%);
+}
+
+.toggle-checkbox:checked ~ .toggle-label {
+  background-color: #080908; /* Change background color when checked */
+}
+
+.toggle-checkbox:checked ~ .toggle-label .make-gray-on-active {
+  background-color: rgb(249, 238, 238) !important;
+}
+
+.toggle-checkbox:checked ~ .toggle-label .toggle-slider {
+  transform: translateX(100%); /* Move the slider to the right when checked */
+}
+
+dialog::backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+}
